@@ -22,10 +22,14 @@ def transcribe_audio(file_path, language="kannada"):
     return response
 
 def text_to_speech(input_text, file_name="output.mp3"):
-    response = dwani.Audio.speech(input=input_text, response_format="mp3")
-    with open(file_name, "wb") as f:
-        f.write(response)
-    return file_name
+    try:
+        response = dwani.Audio.speech(input=input_text, response_format="mp3")
+        with open(file_name, "wb") as f:
+            f.write(response)
+        return file_name
+    except Exception as e:
+        print(f"Error in text_to_speech: {e}")
+        raise
 
 # === Example Usage ===
 
