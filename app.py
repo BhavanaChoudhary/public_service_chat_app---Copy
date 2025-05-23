@@ -3,7 +3,8 @@ import webbrowser
 from threading import Timer
 from flask import Flask, request, jsonify, send_from_directory
 from werkzeug.utils import secure_filename
-from dwani_demo import describe_image
+from dwani_demo import describe_image, text_to_speech
+from flask import send_file
 
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = 'uploads'
@@ -15,6 +16,7 @@ if not os.path.exists(app.config['UPLOAD_FOLDER']):
 @app.route('/')
 def serve_index():
     return send_from_directory('templates', 'index.html')
+
 @app.route('/describe-image', methods=['POST'])
 def describe_image_endpoint():
     if 'image' not in request.files:
@@ -38,7 +40,25 @@ def describe_image_endpoint():
         description = response['answer']
     else:
         description = str(response)
-    return jsonify({'description': description})
+
+    # Generate TTS audio
+    try:
+        audio_file = text_to_speech(description)
+    except Exception as e:
+        print(f"Warning: Could not generate TTS audio: {e}")
+        audio_file = None
+
+    audio_url = '/tts-audio' if audio_file else None
+
+    return jsonify({'description': description, 'audio_url': audio_url})
+
+@app.route('/tts-audio')
+def serve_tts_audio():
+    audio_path = 'output.mp3'
+    if os.path.exists(audio_path):
+        return send_file(audio_path, mimetype='audio/mpeg')
+    else:
+        return jsonify({'error': 'Audio file not found'}), 404
 
 def open_browser():
     webbrowser.open_new('http://127.0.0.1:5000')
