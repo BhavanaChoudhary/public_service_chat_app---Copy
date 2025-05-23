@@ -354,6 +354,18 @@
                 audioBtn.className = 'audio-button';
                 audioBtn.innerHTML = '<i class="fas fa-volume-up"></i> Listen';
                 audioBtn.onclick = async () => {
+                    // Create spinner element
+                    let spinner = document.createElement('span');
+                    spinner.className = 'audio-spinner';
+                    spinner.style.marginLeft = '8px';
+                    spinner.style.border = '2px solid #f3f3f3';
+                    spinner.style.borderTop = '2px solid var(--gov-blue)';
+                    spinner.style.borderRadius = '50%';
+                    spinner.style.width = '14px';
+                    spinner.style.height = '14px';
+                    spinner.style.animation = 'spin 1s linear infinite';
+                    audioBtn.appendChild(spinner);
+
                     try {
                         const response = await fetch('/text-to-speech', {
                             method: 'POST',
@@ -371,9 +383,13 @@
                             console.error('Audio playback failed:', e);
                             alert('Audio playback failed. Please try again.');
                         });
+                        // Remove spinner after audio starts playing
+                        spinner.remove();
                     } catch (error) {
                         console.error('Error:', error);
                         alert('Error generating audio. Please try again later.');
+                        // Remove spinner on error
+                        spinner.remove();
                     }
                 };
                 msgDiv.appendChild(audioBtn);

@@ -21,15 +21,28 @@ def transcribe_audio(file_path, language="kannada"):
     response = dwani.ASR.transcribe(file_path=file_path, language=language)
     return response
 
+import time
+
 def text_to_speech(input_text, file_name="output.mp3"):
-    try:
-        response = dwani.Audio.speech(input=input_text, response_format="mp3")
-        with open(file_name, "wb") as f:
-            f.write(response)
-        return file_name
-    except Exception as e:
-        print(f"Error in text_to_speech: {e}")
-        raise
+    max_retries = 3
+    backoff_factor = 2
+    delay = 1  # initial delay in seconds
+
+    for attempt in range(1, max_retries + 1):
+        try:
+            response = dwani.Audio.speech(input=input_text, response_format="mp3")
+            with open(file_name, "wb") as f:
+                f.write(response)
+            return file_name
+        except Exception as e:
+            print(f"Attempt {attempt} - Error in text_to_speech: {e}")
+            if attempt == max_retries:
+                print("Max retries reached. Raising exception.")
+                raise
+            else:
+                sleep_time = delay * (backoff_factor ** (attempt - 1))
+                print(f"Retrying in {sleep_time} seconds...")
+                time.sleep(sleep_time)
 
 # === Example Usage ===
 
