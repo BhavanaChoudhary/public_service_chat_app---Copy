@@ -231,7 +231,7 @@
         }
     </style>
 </head>
-<body>
+<body style="max-width: none; margin: 0; padding: 0;">
     <header class="gov-header">
         <div class="gov-logo">
             <i class="fas fa-university" style="font-size: 2.5rem;"></i>
@@ -240,27 +240,37 @@
                 <p class="gov-subtitle">Ministry of Social Justice and Empowerment</p>
             </div>
         </div>
-        <span class="scheme-badge">Sugamya Bharat Abhiyan Initiative</span>
+        <span class="scheme-badge"> Bharat Schemes Abhiyan Initiative</span>
     </header>
 
-    <div id="chatbox">
-        <div style="text-align: center; padding: 20px;">
-            <i class="fas fa-eye" style="font-size: 3rem; color: var(--gov-blue); margin-bottom: 1rem;"></i>
-            <h2 style="color: var(--gov-dark);">Vision Assistance Portal</h2>
-            <p>Get automated descriptions of images for enhanced accessibility under the Accessible India Campaign</p>
-            
-            <div class="accessibility-features">
-                <div class="accessibility-badge">
-                    <i class="fas fa-wheelchair"></i> WCAG 2.1 Compliant
-                </div>
-                <div class="accessibility-badge">
-                    <i class="fas fa-language"></i> Multi-Language Support
-                </div>
-                <div class="accessibility-badge">
-                    <i class="fas fa-shield-alt"></i> Secure Processing
+    <div style="display: flex; gap: 20px; padding: 20px; height: calc(100vh - 120px); box-sizing: border-box;">
+        <div id="chatbox" style="flex: 1; overflow-y: auto; max-width: 800px;">
+            <div style="text-align: center; padding: 20px;">
+                <i class="fas fa-eye" style="font-size: 3rem; color: var(--gov-blue); margin-bottom: 1rem;"></i>
+                <h2 style="color: var(--gov-dark);">Schemes Description Portal</h2>
+                <p>Get automated descriptions of images for enhanced accessibility under the Accessible India Campaign</p>
+                
+                <div class="accessibility-features">
+                    <div class="accessibility-badge">
+                        <i class="fas fa-wheelchair"></i> WCAG 2.1 Compliant
+                    </div>
+                    <div class="accessibility-badge">
+                        <i class="fas fa-language"></i> Multi-Language Support
+                    </div>
+                    <div class="accessibility-badge">
+                        <i class="fas fa-shield-alt"></i> Secure Processing
+                    </div>
                 </div>
             </div>
         </div>
+
+        <iframe
+            src="https://www.chatbase.co/chatbot-iframe/ySc1SPp5fgtlwSFTmUcXs"
+            width="400px"
+            style="height: 100%; min-height: 700px; border: none; border-radius: 8px; flex-shrink: 0;"
+            frameborder="0"
+            title="Chatbot"
+        ></iframe>
     </div>
 
     <form id="uploadForm">
